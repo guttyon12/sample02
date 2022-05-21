@@ -6,6 +6,8 @@ from tkinter import messagebox
 def init_data():
     global init, data
     data = [[init for i in range(8)] for j in range(8)]
+    data[0][3] = 1
+    btn[0][3]["text"] = "●"
 
 
 def check(e):
@@ -80,12 +82,12 @@ def init_text():
 
 
 root = tk.Tk()
-root.title("〇×ゲーム")
+root.title("リーバーシ")
 
 player = 1
 
 init = 0
-data = [[init for i in range(3)] for j in range(3)]
+data = [[init for i in range(8)] for j in range(8)]
 
 w = 15
 h = 5
@@ -96,6 +98,15 @@ btn = [[tk.Button(root, width=w, height=h) for i in range(8)]
 for i in range(8):
     for j in range(8):
         btn[j][i].grid(column=j, row=i)
+
+data[3][3] = 1
+btn[3][3]["text"] = "●"
+data[4][3] = -1
+btn[4][3]["text"] = "〇"
+data[4][4] = 1
+btn[4][4]["text"] = "●"
+data[3][4] = -1
+btn[3][4]["text"] = "〇"
 
 
 root.bind("<ButtonPress>", check)
