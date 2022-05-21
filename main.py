@@ -2,12 +2,20 @@ import tkinter.ttk as ttk
 import tkinter as tk
 from tkinter import messagebox
 
+# 初期化
+
 
 def init_data():
     global init, data
     data = [[init for i in range(8)] for j in range(8)]
-    data[0][3] = 1
-    btn[0][3]["text"] = "●"
+    data[3][3] = 1
+    btn[3][3]["text"] = "●"
+    data[4][3] = -1
+    btn[4][3]["text"] = "〇"
+    data[4][4] = 1
+    btn[4][4]["text"] = "●"
+    data[3][4] = -1
+    btn[3][4]["text"] = "〇"
 
 
 def check(e):
@@ -15,7 +23,7 @@ def check(e):
     for i in range(8):
         for j in range(8):
             if e.widget == btn[j][i]:
-                if player == 1:
+                if player == 1 and put_check(i, j) == 1:
                     e.widget["text"] = "●"
                     data[j][i] = 1
                 elif player == -1:
@@ -66,7 +74,19 @@ def judge():
 
     return -2
 
-# プレイヤーの変更
+# 置けるかの確認
+
+
+def put_check(i, j):
+    global data, player
+
+    if player == 1:
+        if data[i][j-1] == -1:
+            for a in range(j-2, 0, -1):
+
+    if player == -1:
+
+        # プレイヤーの変更
 
 
 def turn():
