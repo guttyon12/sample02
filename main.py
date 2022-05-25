@@ -23,9 +23,9 @@ def check(e):
     for i in range(8):
         for j in range(8):
             if e.widget == btn[j][i]:
-                if player == 1 and put_check(i, j) == 1:
-                    e.widget["text"] = "●"
-                    data[j][i] = 1
+                if player == 1:
+                    put_check(i, j)
+
                 elif player == -1:
                     e.widget["text"] = "〇"
                     data[j][i] = -1
@@ -81,12 +81,93 @@ def put_check(i, j):
     global data, player
 
     if player == 1:
+        # 上方向のチェック
         if data[i][j-1] == -1:
             for a in range(j-2, 0, -1):
 
-    if player == -1:
+                if data[i][a] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[i][a] != -1:
+                    break
 
-        # プレイヤーの変更
+        # 下方向のチェック
+        elif data[i][j+1] == -1:
+            for a in range(j+2, 7, 1):
+
+                if data[i][a] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[i][a] != -1:
+                    break
+
+        # 右方向のチェック
+        elif data[i+1][j] == -1:
+            for a in range(i+2, 7, 1):
+
+                if data[a][j] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[a][j] != -1:
+                    break
+
+        # 左方向のチェック
+        elif data[i-1][j] == -1:
+            for a in range(i-2, 0, -1):
+
+                if data[a][j] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[a][j] != -1:
+                    break
+
+        # 右斜め上のチェック
+        elif data[i+1][j-1] == -1:
+            for a in range(i+2, 0, 1):
+
+    elif player == -1:
+        # 上方向のチェック
+        if data[i][j-1] == -1:
+            for a in range(j-2, 0, -1):
+
+                if data[i][a] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[i][a] != -1:
+                    break
+
+        # 下方向のチェック
+        elif data[i][j+1] == -1:
+            for a in range(j+2, 7, 1):
+
+                if data[i][a] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[i][a] != -1:
+                    break
+
+        # 右方向のチェック
+        elif data[i+1][j] == -1:
+            for a in range(i+2, 7, 1):
+
+                if data[a][j] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[a][j] != -1:
+                    break
+
+        # 左方向のチェック
+        elif data[i-1][j] == -1:
+            for a in range(i-2, 0, -1):
+
+                if data[a][j] == 1:
+                    data[i][j]["text"] = "●"
+                    data[i][j] = 1
+                if data[a][j] != -1:
+                    break
+
+
+# プレイヤーの変更
 
 
 def turn():
@@ -103,7 +184,7 @@ def init_text():
 
 root = tk.Tk()
 root.title("リーバーシ")
-
+# player 1 は黒 -1は白
 player = 1
 
 init = 0
