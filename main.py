@@ -127,43 +127,43 @@ def put_check(i, j):
 
     elif player == -1:
         # 上方向のチェック
-        if data[i][j-1] == -1:
+        if data[i][j-1] == 1:
             for a in range(j-2, 0, -1):
 
-                if data[i][a] == 1:
-                    data[i][j]["text"] = "●"
-                    data[i][j] = 1
-                if data[i][a] != -1:
+                if data[i][a] == -1:
+                    data[i][j]["text"] = "〇"
+                    data[i][j] = -1
+                if data[i][a] != 1:
                     break
 
         # 下方向のチェック
-        elif data[i][j+1] == -1:
+        elif data[i][j+1] == 1:
             for a in range(j+2, 7, 1):
 
-                if data[i][a] == 1:
-                    data[i][j]["text"] = "●"
-                    data[i][j] = 1
-                if data[i][a] != -1:
+                if data[i][a] == -1:
+                    data[i][j]["text"] = "〇"
+                    data[i][j] = -1
+                if data[i][a] != 1:
                     break
 
         # 右方向のチェック
-        elif data[i+1][j] == -1:
+        elif data[i+1][j] == 1:
             for a in range(i+2, 7, 1):
 
-                if data[a][j] == 1:
-                    data[i][j]["text"] = "●"
-                    data[i][j] = 1
-                if data[a][j] != -1:
+                if data[a][j] == -1:
+                    data[i][j]["text"] = "〇"
+                    data[i][j] = -1
+                if data[a][j] != 1:
                     break
 
         # 左方向のチェック
-        elif data[i-1][j] == -1:
+        elif data[i-1][j] == 1:
             for a in range(i-2, 0, -1):
 
                 if data[a][j] == 1:
-                    data[i][j]["text"] = "●"
-                    data[i][j] = 1
-                if data[a][j] != -1:
+                    data[i][j]["text"] = "〇"
+                    data[i][j] = -1
+                if data[a][j] != 1:
                     break
 
 
