@@ -100,7 +100,7 @@ def put_check(j, i):
                     break
 
         # 左方向のチェック
-        elif data[j-1][i] == -1 and j > 0:
+        elif data[j-1][i] == -1 and j > 1:
             for a in range(j-1, 0, -1):
 
                 if data[a][i] == 1:
