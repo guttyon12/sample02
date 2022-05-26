@@ -27,10 +27,12 @@ def check(e):
                 if player == 1:
                     if put_check(j, i) == 0:
                         return
+                    reverse(j, i)
 
                 elif player == -1:
                     if put_check(j, i) == 0:
                         return
+                    reverse(j, i)
 
     player = turn()
 
@@ -65,8 +67,8 @@ def put_check(j, i):
 
     if player == 1:
         # 上方向のチェック
-        if data[j][i-1] == -1 and i > 1:
-            for a in range(i-2, 0, -1):
+        if data[j][i-1] == -1 and i > 0:
+            for a in range(i-1, 0, -1):
 
                 if data[j][a] == 1:
                     btn[j][i]["text"] = "●"
@@ -76,8 +78,8 @@ def put_check(j, i):
                     break
 
         # 下方向のチェック
-        elif data[j][i+1] == -1 and i < 6:
-            for a in range(i+2, 7, 1):
+        elif data[j][i+1] == -1 and i < 7:
+            for a in range(i+1, 7, 1):
 
                 if data[j][a] == 1:
                     btn[j][i]["text"] = "●"
@@ -87,8 +89,8 @@ def put_check(j, i):
                     break
 
         # 右方向のチェック
-        elif data[j+1][i] == -1 and j < 6:
-            for a in range(j+2, 7, 1):
+        elif data[j+1][i] == -1 and j < 7:
+            for a in range(j+1, 7, 1):
 
                 if data[a][i] == 1:
                     btn[j][i]["text"] = "●"
@@ -98,8 +100,8 @@ def put_check(j, i):
                     break
 
         # 左方向のチェック
-        elif data[j-1][i] == -1 and j > 1:
-            for a in range(j-2, 0, -1):
+        elif data[j-1][i] == -1 and j > 0:
+            for a in range(j-1, 0, -1):
 
                 if data[a][i] == 1:
                     btn[j][i]["text"] = "●"
@@ -111,7 +113,7 @@ def put_check(j, i):
     if player == -1:
         # 上方向のチェック
         if data[j][i-1] == 1 and i > 1:
-            for a in range(i-2, 0, -1):
+            for a in range(i-1, 0, -1):
 
                 if data[j][a] == -1:
                     btn[j][i]["text"] = "〇"
@@ -122,7 +124,7 @@ def put_check(j, i):
 
         # 下方向のチェック
         elif data[j][i+1] == 1 and i < 6:
-            for a in range(i+2, 7, 1):
+            for a in range(i+1, 7, 1):
 
                 if data[j][a] == -1:
                     btn[j][i]["text"] = "〇"
@@ -133,7 +135,7 @@ def put_check(j, i):
 
         # 右方向のチェック
         elif data[j+1][i] == 1 and j < 6:
-            for a in range(j+2, 7, 1):
+            for a in range(j+1, 7, 1):
 
                 if data[a][i] == -1:
                     btn[j][i]["text"] = "〇"
@@ -144,9 +146,9 @@ def put_check(j, i):
 
         # 左方向のチェック
         elif data[j-1][i] == 1 and j > 1:
-            for a in range(j-2, 0, -1):
+            for a in range(j-1, 0, -1):
 
-                if data[a][i] == 1:
+                if data[a][i] == -1:
                     btn[j][i]["text"] = "〇"
                     data[j][i] = -1
                     return 1
@@ -163,39 +165,77 @@ def reverse(j, i):
     if player == 1:
         # 上方向
         if data[j][i-1] == -1 and i > 1:
-            for a in range(i-2, 0, -1):
+            for a in range(i-1, 0, -1):
 
                 if data[j][a] == 1:
-                    for b in range(a, i-1, 1):
+                    for b in range(a, i, 1):
                         btn[j][b]["text"] = "●"
                         data[j][b] = 1
 
         # 下方向
         if data[j][i+1] == -1 and i < 6:
-            for a in range(i+2, 7, 1):
+            for a in range(i+1, 7, 1):
 
                 if data[j][a] == 1:
-                    for b in range(a, i+1, -1):
+                    for b in range(a, i, -1):
                         btn[j][b]["text"] = "●"
                         data[j][b] = 1
 
         # 右方向
         if data[j+1][i] == -1 and j < 6:
-            for a in range(j+2, 7, 1):
+            for a in range(j+1, 7, 1):
 
                 if data[a][i] == 1:
-                    for b in range(a, j+1, -1):
+                    for b in range(a, j, -1):
                         btn[b][i]["text"] = "●"
                         data[b][i] = 1
 
         # 左方向
         if data[j-1][i] == -1 and j > 1:
-            for a in range(j-2, 0, -1):
+            for a in range(j-1, 0, -1):
 
                 if data[a][i] == 1:
-                    for b in range(a, j-1, 1):
+                    for b in range(a, j, 1):
                         btn[b][i]["text"] = "●"
                         data[b][i] = 1
+
+    elif player == -1:
+
+        # 上方向
+        if data[j][i-1] == 1 and i > 1:
+            for a in range(i-1, 0, -1):
+
+                if data[j][a] == -1:
+                    for b in range(a, i, 1):
+                        btn[j][b]["text"] = "〇"
+                        data[j][b] = -1
+
+        # 下方向
+        if data[j][i+1] == 1 and i < 6:
+            for a in range(i+1, 7, 1):
+
+                if data[j][a] == -1:
+                    for b in range(a, i, -1):
+                        btn[j][b]["text"] = "〇"
+                        data[j][b] = -1
+
+        # 右方向
+        if data[j+1][i] == 1 and j < 6:
+            for a in range(j+1, 7, 1):
+
+                if data[a][i] == -1:
+                    for b in range(a, j, -1):
+                        btn[b][i]["text"] = "〇"
+                        data[b][i] = -1
+
+        # 左方向
+        if data[j-1][i] == 1 and j > 1:
+            for a in range(j-1, 0, -1):
+
+                if data[a][i] == -1:
+                    for b in range(a, j, 1):
+                        btn[b][i]["text"] = "〇"
+                        data[b][i] = -1
 
 
 # プレイヤーの変更
@@ -219,7 +259,7 @@ player = 1
 init = 0
 data = [[init for i in range(8)] for j in range(8)]
 
-w = 15
+w = 12
 h = 5
 
 btn = [[tk.Button(root, width=w, height=h) for i in range(8)]
