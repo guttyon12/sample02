@@ -1,3 +1,4 @@
+from itertools import count
 import re
 import tkinter.ttk as ttk
 import tkinter as tk
@@ -20,7 +21,7 @@ def init_data():
 
 
 def check(e):
-    global data, player
+    global data, player, count_siro, count_kuro
     for i in range(8):
         for j in range(8):
             if e.widget == btn[j][i]:
@@ -37,11 +38,11 @@ def check(e):
     player = turn()
 
     if judge() == 1:
-        messagebox.showinfo('ゲーム終了', "先行の勝利")
+        messagebox.showinfo('ゲーム終了', "黒の勝ち")
         init_data()
         init_text()
     elif judge() == -1:
-        messagebox.showinfo('ゲーム終了', "後攻の勝利")
+        messagebox.showinfo('ゲーム終了', "白の勝ち")
         init_data()
         init_text()
     elif judge() == -2:
@@ -51,12 +52,26 @@ def check(e):
 
 
 def judge():
-    global data
-    # 縦の探索
+    global data, count_kuro, count_siro
 
-    # 横の探索
+    for i in range(8):
+        for j in range(8):
+            if data[j][i] == 1:
+                count_kuro += 1
+            elif data[j][i] == -1:
+                count_siro += 1
 
-    # 斜めの探索
+            if count_kuro + count_siro == 64:
+                if count_kuro > count_siro:
+                    return 1
+                elif count_siro > count_kuro:
+                    return -1
+                else:
+                    return -2
+            elif count_siro == 0:
+                return 1
+            elif count_kuro == 0:
+                return -1
 
 
 # 置けるかの確認
@@ -67,7 +82,7 @@ def put_check(j, i):
 
     if player == 1:
         # 上方向のチェック
-        if data[j][i-1] == -1 and i > 0:
+        if data[j][i-1] == -1:
             for a in range(i-1, 0, -1):
 
                 if data[j][a] == 1:
@@ -78,7 +93,7 @@ def put_check(j, i):
                     break
 
         # 下方向のチェック
-        elif data[j][i+1] == -1 and i < 7:
+        elif data[j][i+1] == -1:
             for a in range(i+1, 7, 1):
 
                 if data[j][a] == 1:
@@ -89,7 +104,7 @@ def put_check(j, i):
                     break
 
         # 右方向のチェック
-        elif data[j+1][i] == -1 and j < 7:
+        elif data[j+1][i] == -1:
             for a in range(j+1, 7, 1):
 
                 if data[a][i] == 1:
@@ -100,7 +115,7 @@ def put_check(j, i):
                     break
 
         # 左方向のチェック
-        elif data[j-1][i] == -1 and j > 1:
+        elif data[j-1][i] == -1:
             for a in range(j-1, 0, -1):
 
                 if data[a][i] == 1:
@@ -112,7 +127,7 @@ def put_check(j, i):
 
     if player == -1:
         # 上方向のチェック
-        if data[j][i-1] == 1 and i > 1:
+        if data[j][i-1] == 1:
             for a in range(i-1, 0, -1):
 
                 if data[j][a] == -1:
@@ -123,7 +138,7 @@ def put_check(j, i):
                     break
 
         # 下方向のチェック
-        elif data[j][i+1] == 1 and i < 6:
+        elif data[j][i+1] == 1:
             for a in range(i+1, 7, 1):
 
                 if data[j][a] == -1:
@@ -134,7 +149,7 @@ def put_check(j, i):
                     break
 
         # 右方向のチェック
-        elif data[j+1][i] == 1 and j < 6:
+        elif data[j+1][i] == 1:
             for a in range(j+1, 7, 1):
 
                 if data[a][i] == -1:
@@ -145,7 +160,7 @@ def put_check(j, i):
                     break
 
         # 左方向のチェック
-        elif data[j-1][i] == 1 and j > 1:
+        elif data[j-1][i] == 1:
             for a in range(j-1, 0, -1):
 
                 if data[a][i] == -1:
@@ -164,7 +179,7 @@ def reverse(j, i):
 
     if player == 1:
         # 上方向
-        if data[j][i-1] == -1 and i > 1:
+        if data[j][i-1] == -1:
             for a in range(i-1, 0, -1):
 
                 if data[j][a] == 1:
@@ -173,7 +188,7 @@ def reverse(j, i):
                         data[j][b] = 1
 
         # 下方向
-        if data[j][i+1] == -1 and i < 6:
+        if data[j][i+1] == -1:
             for a in range(i+1, 7, 1):
 
                 if data[j][a] == 1:
@@ -182,7 +197,7 @@ def reverse(j, i):
                         data[j][b] = 1
 
         # 右方向
-        if data[j+1][i] == -1 and j < 6:
+        if data[j+1][i] == -1:
             for a in range(j+1, 7, 1):
 
                 if data[a][i] == 1:
@@ -191,7 +206,7 @@ def reverse(j, i):
                         data[b][i] = 1
 
         # 左方向
-        if data[j-1][i] == -1 and j > 1:
+        if data[j-1][i] == -1:
             for a in range(j-1, 0, -1):
 
                 if data[a][i] == 1:
@@ -202,7 +217,7 @@ def reverse(j, i):
     elif player == -1:
 
         # 上方向
-        if data[j][i-1] == 1 and i > 1:
+        if data[j][i-1] == 1:
             for a in range(i-1, 0, -1):
 
                 if data[j][a] == -1:
@@ -211,7 +226,7 @@ def reverse(j, i):
                         data[j][b] = -1
 
         # 下方向
-        if data[j][i+1] == 1 and i < 6:
+        if data[j][i+1] == 1:
             for a in range(i+1, 7, 1):
 
                 if data[j][a] == -1:
@@ -220,7 +235,7 @@ def reverse(j, i):
                         data[j][b] = -1
 
         # 右方向
-        if data[j+1][i] == 1 and j < 6:
+        if data[j+1][i] == 1:
             for a in range(j+1, 7, 1):
 
                 if data[a][i] == -1:
@@ -229,7 +244,7 @@ def reverse(j, i):
                         data[b][i] = -1
 
         # 左方向
-        if data[j-1][i] == 1 and j > 1:
+        if data[j-1][i] == 1:
             for a in range(j-1, 0, -1):
 
                 if data[a][i] == -1:
@@ -241,7 +256,12 @@ def reverse(j, i):
 # プレイヤーの変更
 def turn():
     global player
-    return player * (-1)
+
+    if player == -1:
+        messagebox.showinfo('', "黒のターン")
+    else:
+        messagebox.showinfo('', "白のターン")
+    return player * -1
 
 
 def init_text():
